@@ -1,3 +1,15 @@
 spring:
   application:
     name: neobank-backend
+
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
