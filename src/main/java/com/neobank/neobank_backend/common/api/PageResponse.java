@@ -1,4 +1,15 @@
 package com.neobank.neobank_backend.common.api;
 
-public class PageResponse {
+
+import java.util.List;
+
+public record PageResponse<T>(
+        List<T> content,
+        int page,
+        int size,
+        long totalElements,
+        int totalPages,
+        boolean first,
+        boolean last
+) {
 }
