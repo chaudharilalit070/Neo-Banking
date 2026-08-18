@@ -1,4 +1,11 @@
 package com.neobank.neobank_backend.customer.domain;
 
-public class CustomerStatus {
+
+public enum CustomerStatus {
+
+    PENDING,
+    ACTIVE,
+    SUSPENDED,
+    BLOCKED,
+    CLOSED
 }
