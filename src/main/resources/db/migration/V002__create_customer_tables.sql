@@ -22,8 +22,7 @@ CREATE TABLE customers (
 
     version BIGINT NOT NULL DEFAULT 0,
 
-    CONSTRAINT pk_customers
-        PRIMARY KEY (id),
+    CONSTRAINT pk_customers PRIMARY KEY (id),
 
     CONSTRAINT uk_customers_customer_number
         UNIQUE (customer_number)
