@@ -1,4 +1,8 @@
 package com.neobank.neobank_backend.customer.domain;
 
-public class CustomerType {
+
+public enum CustomerType {
+
+    INDIVIDUAL,
+    BUSINESS
 }
