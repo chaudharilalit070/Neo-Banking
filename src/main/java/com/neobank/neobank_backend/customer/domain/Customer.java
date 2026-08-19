@@ -11,6 +11,8 @@ import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -23,9 +25,14 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, length = 36)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(
+            name = "id",
+            nullable = false,
+            updatable = false,
+            length = 36
+    )
     private UUID id;
-
     @Column(
             name = "customer_number",
             nullable = false,
@@ -111,5 +118,22 @@ public class Customer {
             name = "version",
             nullable = false
     )
+    public void updateProfile(
+            String firstName,
+            String middleName,
+            String lastName,
+            LocalDate dateOfBirth,
+            String nationality,
+            String updatedBy
+    ) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.nationality = nationality;
+
+        this.updatedAt = Instant.now();
+        this.updatedBy = updatedBy;
+    }
     private Long version;
 }
