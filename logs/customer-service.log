@@ -139,3 +139,129 @@ Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
 2026-08-18 12:58:01.514 [SpringApplicationShutdownHook] INFO  customer-service [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-08-18 12:58:01.523 [SpringApplicationShutdownHook] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
 2026-08-18 12:58:01.548 [SpringApplicationShutdownHook] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
+2026-08-18 13:22:31.100 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - Starting NeobankBackendApplication using Java 24.0.1 with PID 13952 (D:\neobank-backend\target\classes started by chaud in D:\neobank-backend)
+2026-08-18 13:22:31.105 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - No active profile set, falling back to 1 default profile: "local"
+2026-08-18 13:22:33.938 [main] INFO  customer-service [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-18 13:22:34.154 [main] INFO  customer-service [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 188 ms. Found 1 JPA repository interface.
+2026-08-18 13:22:35.497 [main] INFO  customer-service [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port 8081 (http)
+2026-08-18 13:22:35.530 [main] INFO  customer-service [o.a.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8081"]
+2026-08-18 13:22:35.535 [main] INFO  customer-service [o.a.catalina.core.StandardService] - Starting service [Tomcat]
+2026-08-18 13:22:35.536 [main] INFO  customer-service [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.41]
+2026-08-18 13:22:35.682 [main] INFO  customer-service [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2026-08-18 13:22:35.682 [main] INFO  customer-service [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 4457 ms
+2026-08-18 13:22:36.701 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2026-08-18 13:22:37.167 [main] INFO  customer-service [com.zaxxer.hikari.pool.HikariPool] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@b94703b
+2026-08-18 13:22:37.171 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2026-08-18 13:22:37.294 [main] INFO  customer-service [org.flywaydb.core.FlywayExecutor] - Database: jdbc:mysql://localhost:3306/customer_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC (MySQL 8.0)
+2026-08-18 13:22:37.461 [main] INFO  customer-service [o.f.core.internal.command.DbValidate] - Successfully validated 7 migrations (execution time 00:00.106s)
+2026-08-18 13:22:37.495 [main] INFO  customer-service [o.f.core.internal.command.DbMigrate] - Current version of schema `customer_db`: 007
+2026-08-18 13:22:37.504 [main] INFO  customer-service [o.f.core.internal.command.DbMigrate] - Schema `customer_db` is up to date. No migration necessary.
+2026-08-18 13:22:38.545 [main] INFO  customer-service [o.s.o.j.p.SpringPersistenceUnitInfo] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-18 13:22:40.839 [main] ERROR customer-service [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: wrong column type encountered in column [id] in table [customers]; found [char (Types#CHAR)], but expecting [binary(36) (Types#BINARY)]
+2026-08-18 13:22:40.840 [main] WARN  customer-service [o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: wrong column type encountered in column [id] in table [customers]; found [char (Types#CHAR)], but expecting [binary(36) (Types#BINARY)]
+2026-08-18 13:22:40.841 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2026-08-18 13:22:40.856 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
+2026-08-18 13:22:40.864 [main] INFO  customer-service [o.a.catalina.core.StandardService] - Stopping service [Tomcat]
+2026-08-18 13:22:40.903 [main] INFO  customer-service [o.s.b.a.l.ConditionEvaluationReportLogger] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-08-18 13:22:40.948 [main] ERROR customer-service [o.s.boot.SpringApplication] - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: wrong column type encountered in column [id] in table [customers]; found [char (Types#CHAR)], but expecting [binary(36) (Types#BINARY)]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1826)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1362)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1351)
+	at com.neobank.neobank_backend.NeobankBackendApplication.main(NeobankBackendApplication.java:10)
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: wrong column type encountered in column [id] in table [customers]; found [char (Types#CHAR)], but expecting [binary(36) (Types#BINARY)]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:431)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1873)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1822)
+	... 15 common frames omitted
+Caused by: org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: wrong column type encountered in column [id] in table [customers]; found [char (Types#CHAR)], but expecting [binary(36) (Types#BINARY)]
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.validateColumnType(AbstractSchemaValidator.java:169)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.validateTable(AbstractSchemaValidator.java:156)
+	at org.hibernate.tool.schema.internal.GroupedSchemaValidatorImpl.validateTables(GroupedSchemaValidatorImpl.java:46)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.performValidation(AbstractSchemaValidator.java:99)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.doValidation(AbstractSchemaValidator.java:77)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:289)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1430)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1517)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	... 19 common frames omitted
+2026-08-18 13:24:52.674 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - Starting NeobankBackendApplication using Java 24.0.1 with PID 2980 (D:\neobank-backend\target\classes started by chaud in D:\neobank-backend)
+2026-08-18 13:24:52.678 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - No active profile set, falling back to 1 default profile: "local"
+2026-08-18 13:24:55.389 [main] INFO  customer-service [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-18 13:24:55.552 [main] INFO  customer-service [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 136 ms. Found 1 JPA repository interface.
+2026-08-18 13:24:56.756 [main] INFO  customer-service [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port 8081 (http)
+2026-08-18 13:24:56.785 [main] INFO  customer-service [o.a.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8081"]
+2026-08-18 13:24:56.790 [main] INFO  customer-service [o.a.catalina.core.StandardService] - Starting service [Tomcat]
+2026-08-18 13:24:56.791 [main] INFO  customer-service [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.41]
+2026-08-18 13:24:56.910 [main] INFO  customer-service [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2026-08-18 13:24:56.912 [main] INFO  customer-service [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 4113 ms
+2026-08-18 13:24:57.897 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2026-08-18 13:24:58.259 [main] INFO  customer-service [com.zaxxer.hikari.pool.HikariPool] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@50ff7063
+2026-08-18 13:24:58.262 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2026-08-18 13:24:58.362 [main] INFO  customer-service [org.flywaydb.core.FlywayExecutor] - Database: jdbc:mysql://localhost:3306/customer_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC (MySQL 8.0)
+2026-08-18 13:24:58.518 [main] INFO  customer-service [o.f.core.internal.command.DbValidate] - Successfully validated 7 migrations (execution time 00:00.100s)
+2026-08-18 13:24:58.559 [main] INFO  customer-service [o.f.core.internal.command.DbMigrate] - Current version of schema `customer_db`: 007
+2026-08-18 13:24:58.568 [main] INFO  customer-service [o.f.core.internal.command.DbMigrate] - Schema `customer_db` is up to date. No migration necessary.
+2026-08-18 13:24:59.979 [main] INFO  customer-service [o.s.o.j.p.SpringPersistenceUnitInfo] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-18 13:25:01.758 [main] INFO  customer-service [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-18 13:25:03.886 [main] INFO  customer-service [o.s.b.a.e.web.EndpointLinksResolver] - Exposing 3 endpoints beneath base path '/actuator'
+2026-08-18 13:25:04.038 [main] INFO  customer-service [o.a.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8081"]
+2026-08-18 13:25:04.074 [main] INFO  customer-service [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port 8081 (http) with context path '/'
+2026-08-18 13:25:04.120 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - Started NeobankBackendApplication in 13.124 seconds (process running for 14.118)
+2026-08-18 13:32:47.940 [SpringApplicationShutdownHook] INFO  customer-service [o.s.b.w.e.tomcat.GracefulShutdown] - Commencing graceful shutdown. Waiting for active requests to complete
+2026-08-18 13:32:47.957 [tomcat-shutdown] INFO  customer-service [o.s.b.w.e.tomcat.GracefulShutdown] - Graceful shutdown complete
+2026-08-18 13:32:47.973 [SpringApplicationShutdownHook] INFO  customer-service [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-08-18 13:32:48.036 [SpringApplicationShutdownHook] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2026-08-18 13:32:48.096 [SpringApplicationShutdownHook] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
+2026-08-18 13:32:57.660 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - Starting NeobankBackendApplication using Java 24.0.1 with PID 12028 (D:\neobank-backend\target\classes started by chaud in D:\neobank-backend)
+2026-08-18 13:32:57.664 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - No active profile set, falling back to 1 default profile: "local"
+2026-08-18 13:33:00.929 [main] INFO  customer-service [o.s.d.r.c.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-18 13:33:01.129 [main] INFO  customer-service [o.s.d.r.c.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 171 ms. Found 1 JPA repository interface.
+2026-08-18 13:33:02.429 [main] INFO  customer-service [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port 8081 (http)
+2026-08-18 13:33:02.462 [main] INFO  customer-service [o.a.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8081"]
+2026-08-18 13:33:02.468 [main] INFO  customer-service [o.a.catalina.core.StandardService] - Starting service [Tomcat]
+2026-08-18 13:33:02.468 [main] INFO  customer-service [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.41]
+2026-08-18 13:33:02.609 [main] INFO  customer-service [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2026-08-18 13:33:02.610 [main] INFO  customer-service [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 4814 ms
+2026-08-18 13:33:03.515 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2026-08-18 13:33:03.895 [main] INFO  customer-service [com.zaxxer.hikari.pool.HikariPool] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26ffd2c0
+2026-08-18 13:33:03.898 [main] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2026-08-18 13:33:04.010 [main] INFO  customer-service [org.flywaydb.core.FlywayExecutor] - Database: jdbc:mysql://localhost:3306/customer_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC (MySQL 8.0)
+2026-08-18 13:33:04.506 [main] INFO  customer-service [o.f.core.internal.command.DbValidate] - Successfully validated 7 migrations (execution time 00:00.411s)
+2026-08-18 13:33:04.553 [main] INFO  customer-service [o.f.core.internal.command.DbMigrate] - Current version of schema `customer_db`: 007
+2026-08-18 13:33:04.562 [main] INFO  customer-service [o.f.core.internal.command.DbMigrate] - Schema `customer_db` is up to date. No migration necessary.
+2026-08-18 13:33:06.208 [main] INFO  customer-service [o.s.o.j.p.SpringPersistenceUnitInfo] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-18 13:33:07.798 [main] INFO  customer-service [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-18 13:33:10.082 [main] INFO  customer-service [o.s.b.a.e.web.EndpointLinksResolver] - Exposing 3 endpoints beneath base path '/actuator'
+2026-08-18 13:33:10.219 [main] INFO  customer-service [o.a.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8081"]
+2026-08-18 13:33:10.254 [main] INFO  customer-service [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port 8081 (http) with context path '/'
+2026-08-18 13:33:10.376 [main] INFO  customer-service [c.n.n.NeobankBackendApplication] - Started NeobankBackendApplication in 14.567 seconds (process running for 15.61)
+2026-08-18 13:51:07.172 [SpringApplicationShutdownHook] INFO  customer-service [o.s.b.w.e.tomcat.GracefulShutdown] - Commencing graceful shutdown. Waiting for active requests to complete
+2026-08-18 13:51:07.180 [tomcat-shutdown] INFO  customer-service [o.s.b.w.e.tomcat.GracefulShutdown] - Graceful shutdown complete
+2026-08-18 13:51:07.188 [SpringApplicationShutdownHook] INFO  customer-service [o.s.o.j.LocalContainerEntityManagerFactoryBean] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-08-18 13:51:07.194 [SpringApplicationShutdownHook] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2026-08-18 13:51:07.212 [SpringApplicationShutdownHook] INFO  customer-service [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
