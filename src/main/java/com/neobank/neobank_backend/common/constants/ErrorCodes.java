@@ -9,6 +9,21 @@ public final class ErrorCodes {
     // Validation
     public static final String VALIDATION_ERROR = "CUS-VAL-001";
 
+    // Customer errors
+    public static final String CUSTOMER_NOT_FOUND = "CUST_001";
+
+    // Customer Contact errors
+    public static final String CUSTOMER_CONTACT_NOT_FOUND = "CONTACT_001";
+    public static final String CUSTOMER_CONTACT_ALREADY_EXISTS = "CONTACT_002";
+    public static final String CONTACT_DOES_NOT_BELONG_TO_CUSTOMER = "CONTACT_003";
+
+    // Validation errors
+    public static final String VALIDATION_ERROR = "VALIDATION_001";
+
+    // General errors
+    public static final String INTERNAL_SERVER_ERROR = "SYSTEM_001";
+
+
     // Customer
     public static final String CUSTOMER_NOT_FOUND = "CUS-CUS-001";
     public static final String CUSTOMER_ALREADY_EXISTS = "CUS-CUS-002";

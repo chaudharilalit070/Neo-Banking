@@ -17,6 +17,15 @@ CREATE TABLE customers (
     created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     created_by VARCHAR(100) NOT NULL,
 
+CREATE INDEX idx_customers_status
+    ON customers (customer_status);
+
+CREATE INDEX idx_customers_name
+    ON customers (last_name, first_name);
+
+CREATE INDEX idx_customers_created_at
+    ON customers (created_at);
+
     updated_at TIMESTAMP(6) NULL DEFAULT NULL,
     updated_by VARCHAR(100) NULL,
 
@@ -26,4 +35,5 @@ CREATE TABLE customers (
 
     CONSTRAINT uk_customers_customer_number
         UNIQUE (customer_number)
+
 );
