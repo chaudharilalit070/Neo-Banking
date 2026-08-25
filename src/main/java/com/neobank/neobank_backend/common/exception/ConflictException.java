@@ -15,6 +15,18 @@ public class ConflictException extends BusinessException {
 
 package com.company.neobanking.customer.common.exception;
 
+public class ConflictException extends RuntimeException {
+
+    public ConflictException(String message) {
+        super(message);
+    }
+
+    public ConflictException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+package com.company.neobanking.customer.common.exception;
+
 import lombok.Getter;
 
 @Getter
