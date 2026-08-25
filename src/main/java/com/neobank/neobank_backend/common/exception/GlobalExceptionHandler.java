@@ -248,3 +248,32 @@ public ResponseEntity<ErrorResponse> handleValidationException(
             .status(HttpStatus.BAD_REQUEST)
             .body(response);
 }
+@ExceptionHandler(MethodArgumentNotValidException.class)
+public ResponseEntity<ErrorResponse> handleValidationException(
+        MethodArgumentNotValidException ex,
+        HttpServletRequest request
+) {
+
+    Map<String, String> validationErrors = new HashMap<>();
+
+    ex.getBindingResult()
+            .getFieldErrors()
+            .forEach(error ->
+                    validationErrors.put(
+                            error.getField(),
+                            error.getDefaultMessage()
+                    )
+            );
+
+    ErrorResponse response = ErrorResponse.builder()
+            .success(false)
+            .errorCode(ErrorCodes.VALIDATION_ERROR)
+            .message("Validation failed")
+            .validationErrors(validationErrors)
+            .path(request.getRequestURI())
+            .build();
+
+    return ResponseEntity
+            .badRequest()
+            .body(response);
+}
