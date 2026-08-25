@@ -39,3 +39,16 @@ public class BusinessException extends RuntimeException {
         this.errorCode = errorCode;
     }
 }
+
+package com.company.neobanking.customer.common.exception;
+
+public class BusinessException extends RuntimeException {
+
+    public BusinessException(String message) {
+        super(message);
+    }
+
+    public BusinessException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
