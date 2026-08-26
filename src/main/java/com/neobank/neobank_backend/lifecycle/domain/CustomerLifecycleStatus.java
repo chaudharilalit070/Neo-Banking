@@ -1,4 +1,9 @@
 package com.neobank.neobank_backend.lifecycle.domain;
 
-public class CustomerLifecycleStatus {
+public enum CustomerLifecycleStatus {
+    PROSPECT,
+    ONBOARDING,
+    ACTIVE,
+    INACTIVE,
+    CLOSED
 }

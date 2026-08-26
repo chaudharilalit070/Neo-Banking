@@ -1,42 +1,25 @@
 package com.neobank.neobank_backend.consent.infrastructure.persistence;
 
+import com.neobank.neobank_backend.consent.domain.ConsentType;
+import com.neobank.neobank_backend.consent.domain.CustomerConsent;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface JpaCustomerConsentRepository
         extends JpaRepository<CustomerConsent, Long> {
 
+    List<CustomerConsent> findAllByCustomerIdOrderByCreatedAtDesc(UUID customerId);
 
-    /**
-     * Get complete consent history for a customer.
-     * Latest records first.
-     */
-    List<CustomerConsent> findAllByCustomerIdOrderByCreatedAtDesc(
-            Long customerId
-    );
-
-
-    /**
-     * Get complete consent history for a customer
-     * and a specific consent type.
-     * Latest records first.
-     */
-    List<CustomerConsent>
-    findAllByCustomerIdAndConsentTypeOrderByCreatedAtDesc(
-            Long customerId,
+    List<CustomerConsent> findAllByCustomerIdAndConsentTypeOrderByCreatedAtDesc(
+            UUID customerId,
             ConsentType consentType
     );
 
-
-    /**
-     * Get the latest consent record for a customer
-     * and a specific consent type.
-     */
-    Optional<CustomerConsent>
-    findTopByCustomerIdAndConsentTypeOrderByCreatedAtDesc(
-            Long customerId,
+    Optional<CustomerConsent> findTopByCustomerIdAndConsentTypeOrderByCreatedAtDesc(
+            UUID customerId,
             ConsentType consentType
     );
 }

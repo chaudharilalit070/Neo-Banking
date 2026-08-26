@@ -1,8 +1,12 @@
 package com.neobank.neobank_backend.lifecycle.infrastructure.persistence;
+
+import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycle;
+import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycleRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class CustomerLifecycleRepositoryAdapter
@@ -22,29 +26,19 @@ public class CustomerLifecycleRepositoryAdapter
     }
 
     @Override
-    public Optional<CustomerLifecycle> findLatestByCustomerId(
-            Long customerId
-    ) {
+    public Optional<CustomerLifecycle> findLatestByCustomerId(UUID customerId) {
         return jpaRepository
-                .findFirstByCustomer_IdOrderByEffectiveAtDescIdDesc(
-                        customerId
-                );
+                .findFirstByCustomer_IdOrderByEffectiveAtDescIdDesc(customerId);
     }
 
     @Override
-    public List<CustomerLifecycle> findAllByCustomerId(
-            Long customerId
-    ) {
+    public List<CustomerLifecycle> findAllByCustomerId(UUID customerId) {
         return jpaRepository
-                .findAllByCustomer_IdOrderByEffectiveAtAscIdAsc(
-                        customerId
-                );
+                .findAllByCustomer_IdOrderByEffectiveAtAscIdAsc(customerId);
     }
 
     @Override
-    public boolean existsByCustomerId(
-            Long customerId
-    ) {
+    public boolean existsByCustomerId(UUID customerId) {
         return jpaRepository.existsByCustomer_Id(customerId);
     }
 }

@@ -1,6 +1,7 @@
 package com.neobank.neobank_backend.customer.application;
 
-
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
+import com.neobank.neobank_backend.common.exception.ResourceNotFoundException;
 import com.neobank.neobank_backend.customer.api.request.CreateCustomerRequest;
 import com.neobank.neobank_backend.customer.api.request.UpdateCustomerRequest;
 import com.neobank.neobank_backend.customer.api.respons.CustomerResponse;
@@ -52,9 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerResponse getCustomerById(UUID customerId) {
 
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new CustomerNumberGenerator.CustomerNotFoundException(customerId)
-                );
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCodes.CUSTOMER_NOT_FOUND,
+                        "Customer not found: " + customerId
+                ));
 
         return mapToResponse(customer);
     }
@@ -67,9 +69,10 @@ public class CustomerServiceImpl implements CustomerService {
     ) {
 
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new CustomerNumberGenerator.CustomerNotFoundException(customerId)
-                );
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCodes.CUSTOMER_NOT_FOUND,
+                        "Customer not found: " + customerId
+                ));
 
         customer.updateProfile(
                 request.firstName(),

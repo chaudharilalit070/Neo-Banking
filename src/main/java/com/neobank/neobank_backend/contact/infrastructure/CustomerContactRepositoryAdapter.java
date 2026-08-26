@@ -1,6 +1,5 @@
 package com.neobank.neobank_backend.contact.infrastructure;
 
-
 import com.neobank.neobank_backend.contact.domain.contact.ContactType;
 import com.neobank.neobank_backend.contact.domain.contact.CustomerContact;
 import com.neobank.neobank_backend.contact.domain.contact.CustomerContactRepository;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,13 +28,13 @@ public class CustomerContactRepositoryAdapter
     }
 
     @Override
-    public List<CustomerContact> findByCustomerId(Long customerId) {
+    public List<CustomerContact> findByCustomerId(UUID customerId) {
         return jpaCustomerContactRepository.findByCustomerId(customerId);
     }
 
     @Override
     public Optional<CustomerContact> findByCustomerIdAndContactTypeAndPrimaryTrue(
-            Long customerId,
+            UUID customerId,
             ContactType contactType
     ) {
         return jpaCustomerContactRepository
@@ -46,7 +46,7 @@ public class CustomerContactRepositoryAdapter
 
     @Override
     public boolean existsByCustomerIdAndContactTypeAndContactValue(
-            Long customerId,
+            UUID customerId,
             ContactType contactType,
             String contactValue
     ) {

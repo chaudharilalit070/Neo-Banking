@@ -1,8 +1,13 @@
 package com.neobank.neobank_backend.consent.api.response;
+
+import com.neobank.neobank_backend.consent.domain.ConsentSource;
+import com.neobank.neobank_backend.consent.domain.ConsentStatus;
+import com.neobank.neobank_backend.consent.domain.ConsentType;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -10,7 +15,7 @@ public class CustomerConsentResponse {
 
     private final Long id;
 
-    private final Long customerId;
+    private final UUID customerId;
 
     private final ConsentType consentType;
 

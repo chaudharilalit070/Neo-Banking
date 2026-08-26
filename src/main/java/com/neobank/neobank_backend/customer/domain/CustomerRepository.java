@@ -9,5 +9,7 @@ public interface CustomerRepository {
 
     Optional<Customer> findById(UUID customerId);
 
+    boolean existsById(UUID customerId);
+
     boolean existsByCustomerNumber(String customerNumber);
 }

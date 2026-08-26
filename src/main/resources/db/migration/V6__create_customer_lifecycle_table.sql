@@ -1,7 +1,7 @@
 CREATE TABLE customer_lifecycle (
     id BIGINT NOT NULL AUTO_INCREMENT,
 
-    customer_id BIGINT NOT NULL,
+    customer_id CHAR(36) NOT NULL,
 
     previous_status VARCHAR(30) NULL,
 

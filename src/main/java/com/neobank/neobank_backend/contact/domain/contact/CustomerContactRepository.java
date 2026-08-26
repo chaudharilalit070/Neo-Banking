@@ -2,6 +2,7 @@ package com.neobank.neobank_backend.contact.domain.contact;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface CustomerContactRepository {
 
@@ -9,15 +10,15 @@ public interface CustomerContactRepository {
 
     Optional<CustomerContact> findById(Long id);
 
-    List<CustomerContact> findByCustomerId(Long customerId);
+    List<CustomerContact> findByCustomerId(UUID customerId);
 
     Optional<CustomerContact> findByCustomerIdAndContactTypeAndPrimaryTrue(
-            Long customerId,
+            UUID customerId,
             ContactType contactType
     );
 
     boolean existsByCustomerIdAndContactTypeAndContactValue(
-            Long customerId,
+            UUID customerId,
             ContactType contactType,
             String contactValue
     );

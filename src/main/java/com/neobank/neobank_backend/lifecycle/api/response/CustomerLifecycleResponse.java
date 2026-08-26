@@ -1,13 +1,17 @@
 package com.neobank.neobank_backend.lifecycle.api.response;
 
+import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycle;
+import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycleReason;
+import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycleStatus;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record CustomerLifecycleResponse(
 
         Long id,
 
-        Long customerId,
+        UUID customerId,
 
         CustomerLifecycleStatus previousStatus,
 
@@ -23,10 +27,7 @@ public record CustomerLifecycleResponse(
 
 ) {
 
-    public static CustomerLifecycleResponse from(
-            CustomerLifecycle lifecycle
-    ) {
-
+    public static CustomerLifecycleResponse from(CustomerLifecycle lifecycle) {
         return new CustomerLifecycleResponse(
                 lifecycle.getId(),
                 lifecycle.getCustomer().getId(),

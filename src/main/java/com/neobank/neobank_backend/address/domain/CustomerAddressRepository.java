@@ -2,6 +2,7 @@ package com.neobank.neobank_backend.address.domain;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface CustomerAddressRepository {
 
@@ -9,15 +10,15 @@ public interface CustomerAddressRepository {
 
     Optional<CustomerAddress> findById(Long id);
 
-    List<CustomerAddress> findByCustomerId(Long customerId);
+    List<CustomerAddress> findByCustomerId(UUID customerId);
 
     Optional<CustomerAddress> findByCustomerIdAndAddressType(
-            Long customerId,
+            UUID customerId,
             AddressType addressType
     );
 
     boolean existsByCustomerIdAndAddressType(
-            Long customerId,
+            UUID customerId,
             AddressType addressType
     );
 }

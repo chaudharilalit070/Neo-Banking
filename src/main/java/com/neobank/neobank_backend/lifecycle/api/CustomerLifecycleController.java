@@ -1,11 +1,23 @@
 package com.neobank.neobank_backend.lifecycle.api;
 
+import com.neobank.neobank_backend.common.api.ApiResponse;
+import com.neobank.neobank_backend.lifecycle.api.request.CustomerLifecycleActionRequest;
+import com.neobank.neobank_backend.lifecycle.api.response.CustomerLifecycleResponse;
+import com.neobank.neobank_backend.lifecycle.application.CustomerLifecycleService;
 import jakarta.validation.Valid;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/customers/{customerId}/lifecycle")
@@ -19,55 +31,43 @@ public class CustomerLifecycleController {
         this.lifecycleService = lifecycleService;
     }
 
-    /**
-     * Apply a lifecycle action to a customer.
-     */
     @PostMapping("/actions")
+    @PreAuthorize("hasAnyRole('OPERATIONS', 'ADMIN')")
     public ResponseEntity<ApiResponse<CustomerLifecycleResponse>> applyAction(
-            @PathVariable Long customerId,
+            @PathVariable UUID customerId,
             @Valid @RequestBody CustomerLifecycleActionRequest request
     ) {
-
         CustomerLifecycleResponse response =
-                lifecycleService.applyAction(
-                        customerId,
-                        request
-                );
+                lifecycleService.applyAction(customerId, request);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(ApiResponse.success(response));
+                .body(ApiResponse.success(MDC.get("correlationId"), response));
     }
 
-    /**
-     * Get the customer's current lifecycle.
-     */
     @GetMapping("/current")
+    @PreAuthorize("hasAnyRole('OPERATIONS', 'ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<CustomerLifecycleResponse>> getCurrentLifecycle(
-            @PathVariable Long customerId
+            @PathVariable UUID customerId
     ) {
-
         CustomerLifecycleResponse response =
                 lifecycleService.getCurrentLifecycle(customerId);
 
         return ResponseEntity.ok(
-                ApiResponse.success(response)
+                ApiResponse.success(MDC.get("correlationId"), response)
         );
     }
 
-    /**
-     * Get complete lifecycle history.
-     */
     @GetMapping
+    @PreAuthorize("hasAnyRole('OPERATIONS', 'ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<CustomerLifecycleResponse>>> getHistory(
-            @PathVariable Long customerId
+            @PathVariable UUID customerId
     ) {
-
         List<CustomerLifecycleResponse> response =
                 lifecycleService.getLifecycleHistory(customerId);
 
         return ResponseEntity.ok(
-                ApiResponse.success(response)
+                ApiResponse.success(MDC.get("correlationId"), response)
         );
     }
 }

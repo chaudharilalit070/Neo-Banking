@@ -1,10 +1,23 @@
 package com.neobank.neobank_backend.consent.application;
 
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
+import com.neobank.neobank_backend.common.exception.ConflictException;
+import com.neobank.neobank_backend.common.exception.ResourceNotFoundException;
+import com.neobank.neobank_backend.consent.api.request.GrantCustomerConsentRequest;
+import com.neobank.neobank_backend.consent.api.request.WithdrawCustomerConsentRequest;
+import com.neobank.neobank_backend.consent.api.response.CustomerConsentResponse;
+import com.neobank.neobank_backend.consent.domain.ConsentStatus;
+import com.neobank.neobank_backend.consent.domain.ConsentType;
+import com.neobank.neobank_backend.consent.domain.CustomerConsent;
+import com.neobank.neobank_backend.consent.domain.CustomerConsentRepository;
+import com.neobank.neobank_backend.customer.domain.Customer;
+import com.neobank.neobank_backend.customer.domain.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -14,16 +27,11 @@ public class CustomerConsentService {
     private final CustomerRepository customerRepository;
     private final CustomerConsentRepository customerConsentRepository;
 
-
-    /**
-     * Grant customer consent.
-     */
     @Transactional
     public CustomerConsentResponse grantConsent(
-            Long customerId,
+            UUID customerId,
             GrantCustomerConsentRequest request
     ) {
-
         Customer customer = getCustomer(customerId);
 
         CustomerConsent consent = CustomerConsent.builder()
@@ -41,16 +49,11 @@ public class CustomerConsentService {
         return toResponse(savedConsent);
     }
 
-
-    /**
-     * Withdraw customer consent.
-     */
     @Transactional
     public CustomerConsentResponse withdrawConsent(
-            Long customerId,
+            UUID customerId,
             WithdrawCustomerConsentRequest request
     ) {
-
         Customer customer = getCustomer(customerId);
 
         CustomerConsent latestConsent =
@@ -60,13 +63,15 @@ public class CustomerConsentService {
                                 request.getConsentType()
                         )
                         .orElseThrow(() ->
-                                new IllegalStateException(
+                                new ResourceNotFoundException(
+                                        ErrorCodes.CONSENT_NOT_FOUND,
                                         "No existing consent found for customer"
                                 )
                         );
 
         if (latestConsent.getStatus() == ConsentStatus.WITHDRAWN) {
-            throw new IllegalStateException(
+            throw new ConflictException(
+                    ErrorCodes.CONSENT_ALREADY_WITHDRAWN,
                     "Consent is already withdrawn"
             );
         }
@@ -77,9 +82,7 @@ public class CustomerConsentService {
                         .consentType(latestConsent.getConsentType())
                         .status(ConsentStatus.WITHDRAWN)
                         .consentVersion(latestConsent.getConsentVersion())
-                        .consentTextVersion(
-                                latestConsent.getConsentTextVersion()
-                        )
+                        .consentTextVersion(latestConsent.getConsentTextVersion())
                         .source(request.getSource())
                         .build();
 
@@ -89,14 +92,7 @@ public class CustomerConsentService {
         return toResponse(savedConsent);
     }
 
-
-    /**
-     * Get complete consent history for a customer.
-     */
-    public List<CustomerConsentResponse> getConsentHistory(
-            Long customerId
-    ) {
-
+    public List<CustomerConsentResponse> getConsentHistory(UUID customerId) {
         getCustomer(customerId);
 
         return customerConsentRepository
@@ -106,36 +102,23 @@ public class CustomerConsentService {
                 .toList();
     }
 
-
-    /**
-     * Get consent history for a specific consent type.
-     */
     public List<CustomerConsentResponse> getConsentHistoryByType(
-            Long customerId,
-            com.company.neobanking.customer.customer.domain.consent.ConsentType consentType
+            UUID customerId,
+            ConsentType consentType
     ) {
-
         getCustomer(customerId);
 
         return customerConsentRepository
-                .findAllByCustomerIdAndConsentType(
-                        customerId,
-                        consentType
-                )
+                .findAllByCustomerIdAndConsentType(customerId, consentType)
                 .stream()
                 .map(this::toResponse)
                 .toList();
     }
 
-
-    /**
-     * Get latest/current consent for a specific consent type.
-     */
     public CustomerConsentResponse getLatestConsent(
-            Long customerId,
-            com.company.neobanking.customer.customer.domain.consent.ConsentType consentType
+            UUID customerId,
+            ConsentType consentType
     ) {
-
         getCustomer(customerId);
 
         CustomerConsent consent =
@@ -145,7 +128,8 @@ public class CustomerConsentService {
                                 consentType
                         )
                         .orElseThrow(() ->
-                                new IllegalStateException(
+                                new ResourceNotFoundException(
+                                        ErrorCodes.CONSENT_NOT_FOUND,
                                         "No consent record found for customer"
                                 )
                         );
@@ -153,28 +137,17 @@ public class CustomerConsentService {
         return toResponse(consent);
     }
 
-
-    /**
-     * Find customer.
-     */
-    private Customer getCustomer(Long customerId) {
-
+    private Customer getCustomer(UUID customerId) {
         return customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new IllegalStateException(
+                        new ResourceNotFoundException(
+                                ErrorCodes.CUSTOMER_NOT_FOUND,
                                 "Customer not found with id: " + customerId
                         )
                 );
     }
 
-
-    /**
-     * Convert domain entity to API response.
-     */
-    private CustomerConsentResponse toResponse(
-            CustomerConsent consent
-    ) {
-
+    private CustomerConsentResponse toResponse(CustomerConsent consent) {
         return CustomerConsentResponse.builder()
                 .id(consent.getId())
                 .customerId(consent.getCustomer().getId())

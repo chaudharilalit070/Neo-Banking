@@ -1,93 +1,78 @@
 package com.neobank.neobank_backend.lifecycle.domain;
 
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
+import com.neobank.neobank_backend.common.exception.BusinessException;
+
 public final class CustomerLifecycleTransitionPolicy {
 
     private CustomerLifecycleTransitionPolicy() {
-        // Utility class
     }
 
     public static CustomerLifecycleTransition resolve(
             CustomerLifecycleStatus currentStatus,
             CustomerLifecycleAction action
     ) {
-
         if (currentStatus == null) {
             throw new BusinessException(
+                    ErrorCodes.INVALID_LIFECYCLE_TRANSITION,
                     "Current customer lifecycle status is required"
             );
         }
 
         if (action == null) {
             throw new BusinessException(
+                    ErrorCodes.INVALID_LIFECYCLE_TRANSITION,
                     "Customer lifecycle action is required"
             );
         }
 
         return switch (action) {
-
             case START_ONBOARDING -> {
-
                 validate(
                         currentStatus,
                         CustomerLifecycleStatus.PROSPECT,
                         action
                 );
-
                 yield new CustomerLifecycleTransition(
                         CustomerLifecycleStatus.ONBOARDING,
                         CustomerLifecycleReason.ONBOARDING_STARTED
                 );
             }
-
             case COMPLETE_ONBOARDING -> {
-
                 validate(
                         currentStatus,
                         CustomerLifecycleStatus.ONBOARDING,
                         action
                 );
-
                 yield new CustomerLifecycleTransition(
                         CustomerLifecycleStatus.ACTIVE,
                         CustomerLifecycleReason.ONBOARDING_COMPLETED
                 );
             }
-
             case DEACTIVATE -> {
-
                 validate(
                         currentStatus,
                         CustomerLifecycleStatus.ACTIVE,
                         action
                 );
-
                 yield new CustomerLifecycleTransition(
                         CustomerLifecycleStatus.INACTIVE,
                         CustomerLifecycleReason.CUSTOMER_DEACTIVATED
                 );
             }
-
             case REACTIVATE -> {
-
                 validate(
                         currentStatus,
                         CustomerLifecycleStatus.INACTIVE,
                         action
                 );
-
                 yield new CustomerLifecycleTransition(
                         CustomerLifecycleStatus.ACTIVE,
                         CustomerLifecycleReason.CUSTOMER_REACTIVATED
                 );
             }
-
             case CLOSE -> {
-
-                validateCloseTransition(
-                        currentStatus,
-                        action
-                );
-
+                validateCloseTransition(currentStatus, action);
                 yield new CustomerLifecycleTransition(
                         CustomerLifecycleStatus.CLOSED,
                         CustomerLifecycleReason.CUSTOMER_CLOSED
@@ -101,12 +86,10 @@ public final class CustomerLifecycleTransitionPolicy {
             CustomerLifecycleStatus requiredStatus,
             CustomerLifecycleAction action
     ) {
-
         if (currentStatus != requiredStatus) {
-
             throw new BusinessException(
-                    "Action "
-                            + action
+                    ErrorCodes.INVALID_LIFECYCLE_TRANSITION,
+                    "Action " + action
                             + " is not allowed from lifecycle status "
                             + currentStatus
             );
@@ -117,13 +100,11 @@ public final class CustomerLifecycleTransitionPolicy {
             CustomerLifecycleStatus currentStatus,
             CustomerLifecycleAction action
     ) {
-
         if (currentStatus != CustomerLifecycleStatus.ACTIVE
                 && currentStatus != CustomerLifecycleStatus.INACTIVE) {
-
             throw new BusinessException(
-                    "Action "
-                            + action
+                    ErrorCodes.INVALID_LIFECYCLE_TRANSITION,
+                    "Action " + action
                             + " is not allowed from lifecycle status "
                             + currentStatus
             );

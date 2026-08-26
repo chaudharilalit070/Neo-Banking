@@ -1,8 +1,13 @@
 package com.neobank.neobank_backend.preference.api.respons;
+
+import com.neobank.neobank_backend.preference.domain.CommunicationChannel;
+import com.neobank.neobank_backend.preference.domain.PreferenceStatus;
+import com.neobank.neobank_backend.preference.domain.PreferredLanguage;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -10,7 +15,7 @@ public class CustomerPreferenceResponse {
 
     private final Long id;
 
-    private final Long customerId;
+    private final UUID customerId;
 
     private final PreferredLanguage preferredLanguage;
 

@@ -1,6 +1,6 @@
 package com.neobank.neobank_backend.customer.api.Controller;
 
-
+import com.neobank.neobank_backend.common.api.ApiResponse;
 import com.neobank.neobank_backend.customer.api.request.CreateCustomerRequest;
 import com.neobank.neobank_backend.customer.api.request.UpdateCustomerRequest;
 import com.neobank.neobank_backend.customer.api.respons.CustomerResponse;
@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-// Change this import if your ApiResponse package is different
-import com.neobank.neobank_backend.common.api.ApiResponse;
-
 @RestController
 @RequestMapping("/api/v1/customers")
 @RequiredArgsConstructor
@@ -30,8 +28,8 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-
     @PostMapping
+    @PreAuthorize("hasAnyRole('OPERATIONS', 'ADMIN')")
     public ResponseEntity<ApiResponse<CustomerResponse>> createCustomer(
             @Valid @RequestBody CreateCustomerRequest request
     ) {
@@ -48,8 +46,8 @@ public class CustomerController {
                 );
     }
 
-
     @GetMapping("/{customerId}")
+    @PreAuthorize("hasAnyRole('OPERATIONS', 'ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<CustomerResponse>> getCustomerById(
             @PathVariable UUID customerId
     ) {
@@ -65,8 +63,8 @@ public class CustomerController {
         );
     }
 
-
     @PutMapping("/{customerId}")
+    @PreAuthorize("hasAnyRole('OPERATIONS', 'ADMIN')")
     public ResponseEntity<ApiResponse<CustomerResponse>> updateCustomer(
             @PathVariable UUID customerId,
             @Valid @RequestBody UpdateCustomerRequest request

@@ -35,6 +35,7 @@ public class CustomerContact {
     @JoinColumn(
             name = "customer_id",
             nullable = false,
+            columnDefinition = "CHAR(36)",
             foreignKey = @ForeignKey(name = "fk_customer_contacts_customer")
     )
     private Customer customer;

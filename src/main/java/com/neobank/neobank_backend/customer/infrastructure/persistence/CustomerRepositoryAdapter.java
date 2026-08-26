@@ -25,6 +25,11 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
     }
 
     @Override
+    public boolean existsById(UUID customerId) {
+        return jpaCustomerRepository.existsById(customerId);
+    }
+
+    @Override
     public boolean existsByCustomerNumber(String customerNumber) {
         return jpaCustomerRepository.existsByCustomerNumber(customerNumber);
     }

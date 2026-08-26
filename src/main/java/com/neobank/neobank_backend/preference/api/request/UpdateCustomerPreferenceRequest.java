@@ -1,4 +1,7 @@
 package com.neobank.neobank_backend.preference.api.request;
+
+import com.neobank.neobank_backend.preference.domain.CommunicationChannel;
+import com.neobank.neobank_backend.preference.domain.PreferredLanguage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,36 +1,22 @@
 package com.neobank.neobank_backend.lifecycle.infrastructure.persistence;
+
+import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface JpaCustomerLifecycleRepository
         extends JpaRepository<CustomerLifecycle, Long> {
 
-    /**
-     * Find the latest lifecycle record for a customer.
-     *
-     * Ordering:
-     * 1. Latest effective time
-     * 2. Highest ID as deterministic tie-breaker
-     */
     Optional<CustomerLifecycle> findFirstByCustomer_IdOrderByEffectiveAtDescIdDesc(
-            Long customerId
+            UUID customerId
     );
 
-    /**
-     * Find complete lifecycle history.
-     *
-     * Oldest record first.
-     */
     List<CustomerLifecycle> findAllByCustomer_IdOrderByEffectiveAtAscIdAsc(
-            Long customerId
+            UUID customerId
     );
 
-    /**
-     * Check whether lifecycle records exist for a customer.
-     */
-    boolean existsByCustomer_Id(
-            Long customerId
-    );
+    boolean existsByCustomer_Id(UUID customerId);
 }
