@@ -1,5 +1,7 @@
 package com.neobank.neobank_backend.preference.api.request;
 
+import com.neobank.neobank_backend.preference.domain.CommunicationChannel;
+import com.neobank.neobank_backend.preference.domain.PreferredLanguage;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,44 +1,15 @@
 package com.neobank.neobank_backend.common.exception;
 
-
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
 import org.springframework.http.HttpStatus;
 
 public class ConflictException extends BusinessException {
 
-    public ConflictException(
-            String errorCode,
-            String message
-    ) {
-        super(errorCode, message, HttpStatus.CONFLICT);
-    }
-}
-
-package com.company.neobanking.customer.common.exception;
-
-public class ConflictException extends RuntimeException {
-
     public ConflictException(String message) {
-        super(message);
+        this(ErrorCodes.CONFLICT, message);
     }
 
-    public ConflictException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
-package com.company.neobanking.customer.common.exception;
-
-import lombok.Getter;
-
-@Getter
-public class ConflictException extends RuntimeException {
-
-    private final String errorCode;
-
-    public ConflictException(
-            String errorCode,
-            String message
-    ) {
-        super(message);
-        this.errorCode = errorCode;
+    public ConflictException(String errorCode, String message) {
+        super(errorCode, message, HttpStatus.CONFLICT);
     }
 }

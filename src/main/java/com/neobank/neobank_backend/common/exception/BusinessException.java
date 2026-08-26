@@ -1,6 +1,6 @@
 package com.neobank.neobank_backend.common.exception;
 
-
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -10,45 +10,23 @@ public class BusinessException extends RuntimeException {
     private final String errorCode;
     private final HttpStatus status;
 
-    public BusinessException(
-            String errorCode,
-            String message,
-            HttpStatus status
-    ) {
+    public BusinessException(String message) {
+        this(ErrorCodes.BUSINESS_ERROR, message, HttpStatus.BAD_REQUEST);
+    }
+
+    public BusinessException(String errorCode, String message) {
+        this(errorCode, message, HttpStatus.BAD_REQUEST);
+    }
+
+    public BusinessException(String errorCode, String message, HttpStatus status) {
         super(message);
         this.errorCode = errorCode;
         this.status = status;
     }
-}
-
-
-package com.company.neobanking.customer.common.exception;
-
-import lombok.Getter;
-
-@Getter
-public class BusinessException extends RuntimeException {
-
-    private final String errorCode;
-
-    public BusinessException(
-            String errorCode,
-            String message
-    ) {
-        super(message);
-        this.errorCode = errorCode;
-    }
-}
-
-package com.company.neobanking.customer.common.exception;
-
-public class BusinessException extends RuntimeException {
-
-    public BusinessException(String message) {
-        super(message);
-    }
 
     public BusinessException(String message, Throwable cause) {
         super(message, cause);
+        this.errorCode = ErrorCodes.BUSINESS_ERROR;
+        this.status = HttpStatus.BAD_REQUEST;
     }
 }
