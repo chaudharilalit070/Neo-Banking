@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddCustomerAddressRequest {
 
-    @NotBlank
     @NotNull(message = "Address type is required")
     private AddressType addressType;
 

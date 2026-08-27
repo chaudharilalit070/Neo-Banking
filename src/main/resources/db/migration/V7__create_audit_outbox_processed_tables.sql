@@ -12,13 +12,11 @@ CREATE TABLE audit_events (
     source VARCHAR(100) NOT NULL,
 
     PRIMARY KEY (id),
-
-    INDEX idx_audit_customer_occurred (customer_id, occurred_at),
-    INDEX idx_audit_correlation (correlation_id),
-
-    CONSTRAINT fk_audit_events_customer
-        FOREIGN KEY (customer_id) REFERENCES customers(id)
+    CONSTRAINT fk_audit_events_customer FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
+
+CREATE INDEX idx_audit_customer_occurred ON audit_events (customer_id, occurred_at);
+CREATE INDEX idx_audit_correlation ON audit_events (correlation_id);
 
 CREATE TABLE event_outbox (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -31,11 +29,11 @@ CREATE TABLE event_outbox (
     published_at DATETIME NULL,
     retry_count INT NOT NULL DEFAULT 0,
 
-    PRIMARY KEY (id),
-
-    INDEX idx_event_outbox_status_created (status, created_at),
-    INDEX idx_event_outbox_aggregate (aggregate_type, aggregate_id)
+    PRIMARY KEY (id)
 );
+
+CREATE INDEX idx_event_outbox_status_created ON event_outbox (status, created_at);
+CREATE INDEX idx_event_outbox_aggregate ON event_outbox (aggregate_type, aggregate_id);
 
 CREATE TABLE processed_event (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -44,6 +42,5 @@ CREATE TABLE processed_event (
     processed_at DATETIME NOT NULL,
 
     PRIMARY KEY (id),
-
     CONSTRAINT uk_processed_event_event_id UNIQUE (event_id)
 );

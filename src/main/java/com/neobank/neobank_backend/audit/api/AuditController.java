@@ -2,6 +2,8 @@ package com.neobank.neobank_backend.audit.api;
 
 import com.neobank.neobank_backend.audit.application.AuditService;
 import com.neobank.neobank_backend.audit.domain.AuditEvent;
+import com.neobank.neobank_backend.common.api.ApiResponse;
+import org.slf4j.MDC;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ public class AuditController {
 
     @PreAuthorize("hasAnyRole('AUDITOR', 'OPERATIONS', 'ADMIN')")
     @GetMapping("/{customerId}/audit")
-    public ResponseEntity<List<AuditEventResponse>> getAuditHistory(
+    public ResponseEntity<ApiResponse<List<AuditEventResponse>>> getAuditHistory(
             @PathVariable UUID customerId,
             @RequestParam(required = false) LocalDateTime from,
             @RequestParam(required = false) LocalDateTime to
@@ -47,7 +49,9 @@ public class AuditController {
                 .map(this::toResponse)
                 .toList();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(
+                ApiResponse.success(MDC.get("correlationId"), response)
+        );
     }
 
     private AuditEventResponse toResponse(AuditEvent event) {

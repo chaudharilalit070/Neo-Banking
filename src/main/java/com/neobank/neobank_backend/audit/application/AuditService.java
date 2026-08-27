@@ -1,5 +1,6 @@
 package com.neobank.neobank_backend.audit.application;
 
+import com.neobank.neobank_backend.audit.domain.ActorType;
 import com.neobank.neobank_backend.audit.domain.AuditAction;
 import com.neobank.neobank_backend.audit.domain.AuditEvent;
 import com.neobank.neobank_backend.audit.domain.AuditEventRepository;
@@ -13,10 +14,58 @@ import java.util.UUID;
 @Service
 public class AuditService {
 
+    private static final String SERVICE_SOURCE = "customer-service";
+
     private final AuditEventRepository auditEventRepository;
 
     public AuditService(AuditEventRepository auditEventRepository) {
         this.auditEventRepository = auditEventRepository;
+    }
+
+    @Transactional
+    public void recordCustomerCreation(
+            UUID customerId,
+            String actorId,
+            String actorType,
+            String correlationId
+    ) {
+        AuditEvent event = new AuditEvent(
+                customerId,
+                AuditAction.CUSTOMER_CREATED,
+                null,
+                "PROSPECT",
+                "Customer profile created",
+                actorId,
+                actorType != null ? actorType : ActorType.EMPLOYEE.name(),
+                correlationId,
+                LocalDateTime.now(),
+                SERVICE_SOURCE
+        );
+
+        auditEventRepository.save(event);
+    }
+
+    @Transactional
+    public void recordCustomerUpdate(
+            UUID customerId,
+            String actorId,
+            String actorType,
+            String correlationId
+    ) {
+        AuditEvent event = new AuditEvent(
+                customerId,
+                AuditAction.CUSTOMER_UPDATED,
+                null,
+                null,
+                "Customer profile updated",
+                actorId,
+                actorType != null ? actorType : ActorType.EMPLOYEE.name(),
+                correlationId,
+                LocalDateTime.now(),
+                SERVICE_SOURCE
+        );
+
+        auditEventRepository.save(event);
     }
 
     @Transactional
@@ -36,10 +85,10 @@ public class AuditService {
                 newStatus,
                 reason,
                 actorId,
-                actorType,
+                actorType != null ? actorType : ActorType.EMPLOYEE.name(),
                 correlationId,
                 LocalDateTime.now(),
-                "customer-service"
+                SERVICE_SOURCE
         );
 
         auditEventRepository.save(event);
