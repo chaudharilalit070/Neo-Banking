@@ -13,8 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddCustomerAddressRequest {
 
+    @NotBlank
     @NotNull(message = "Address type is required")
     private AddressType addressType;
+
 
     @NotBlank(message = "Address line 1 is required")
     @Size(max = 255, message = "Address line 1 must not exceed 255 characters")
