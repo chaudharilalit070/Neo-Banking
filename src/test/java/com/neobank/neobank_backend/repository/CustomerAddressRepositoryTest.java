@@ -47,7 +47,7 @@ class CustomerAddressRepositoryTest {
 
         CustomerAddress residential = CustomerAddress.builder()
                 .customer(customer)
-                .addressType(AddressType.RESIDENTIAL)
+                .addressType(AddressType.PERMANENT)
                 .addressLine1("100 Main St")
                 .city("New York")
                 .state("NY")
@@ -60,10 +60,10 @@ class CustomerAddressRepositoryTest {
         List<CustomerAddress> addresses = addressRepository.findByCustomerId(customer.getId());
         assertEquals(1, addresses.size());
 
-        assertTrue(addressRepository.existsByCustomerIdAndAddressType(customer.getId(), AddressType.RESIDENTIAL));
-        assertFalse(addressRepository.existsByCustomerIdAndAddressType(customer.getId(), AddressType.MAILING));
+        assertTrue(addressRepository.existsByCustomerIdAndAddressType(customer.getId(), AddressType.PERMANENT));
+        assertFalse(addressRepository.existsByCustomerIdAndAddressType(customer.getId(), AddressType.CURRENT));
 
-        Optional<CustomerAddress> found = addressRepository.findByCustomerIdAndAddressType(customer.getId(), AddressType.RESIDENTIAL);
+        Optional<CustomerAddress> found = addressRepository.findByCustomerIdAndAddressType(customer.getId(), AddressType.PERMANENT);
         assertTrue(found.isPresent());
         assertEquals("New York", found.get().getCity());
     }

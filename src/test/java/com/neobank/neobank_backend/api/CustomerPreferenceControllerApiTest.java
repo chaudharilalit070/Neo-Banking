@@ -62,7 +62,7 @@ class CustomerPreferenceControllerApiTest {
 
         // 1. Create Preferences
         CreateCustomerPreferenceRequest createReq = new CreateCustomerPreferenceRequest();
-        createReq.setPreferredLanguage(PreferredLanguage.EN);
+        createReq.setPreferredLanguage(PreferredLanguage.ENGLISH);
         createReq.setPreferredCommunicationChannel(CommunicationChannel.EMAIL);
         createReq.setMarketingNotifications(false);
         createReq.setTransactionNotifications(true);
@@ -72,7 +72,7 @@ class CustomerPreferenceControllerApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createReq)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.preferredLanguage").value("EN"))
+                .andExpect(jsonPath("$.data.preferredLanguage").value("ENGLISH"))
                 .andExpect(jsonPath("$.data.status").value("ACTIVE"));
 
         // 2. Get Preferences

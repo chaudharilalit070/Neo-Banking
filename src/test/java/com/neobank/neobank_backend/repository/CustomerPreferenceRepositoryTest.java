@@ -47,7 +47,7 @@ class CustomerPreferenceRepositoryTest {
 
         CustomerPreference preference = CustomerPreference.builder()
                 .customer(customer)
-                .preferredLanguage(PreferredLanguage.EN)
+                .preferredLanguage(PreferredLanguage.ENGLISH)
                 .preferredCommunicationChannel(CommunicationChannel.EMAIL)
                 .marketingNotifications(false)
                 .transactionNotifications(true)
@@ -60,7 +60,7 @@ class CustomerPreferenceRepositoryTest {
 
         Optional<CustomerPreference> found = preferenceRepository.findByCustomerId(customer.getId());
         assertTrue(found.isPresent());
-        assertEquals(PreferredLanguage.EN, found.get().getPreferredLanguage());
+        assertEquals(PreferredLanguage.ENGLISH, found.get().getPreferredLanguage());
         assertEquals(CommunicationChannel.EMAIL, found.get().getPreferredCommunicationChannel());
     }
 }

@@ -56,15 +56,15 @@ class CustomerContactRepositoryTest {
                 .build();
         contactRepository.save(emailContact);
 
-        CustomerContact phoneContact = CustomerContact.builder()
+        CustomerContact mobileContact = CustomerContact.builder()
                 .customer(customer)
-                .contactType(ContactType.PHONE)
+                .contactType(ContactType.MOBILE)
                 .contactValue("+15551234567")
                 .primary(true)
                 .verificationStatus(ContactVerificationStatus.VERIFIED)
                 .status(ContactStatus.ACTIVE)
                 .build();
-        contactRepository.save(phoneContact);
+        contactRepository.save(mobileContact);
 
         List<CustomerContact> contacts = contactRepository.findByCustomerId(customer.getId());
         assertEquals(2, contacts.size());

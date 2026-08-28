@@ -87,7 +87,7 @@ class CustomerFullJourneyIntegrationTest {
 
         // Step 3: Add Residential Address
         AddCustomerAddressRequest addressRequest = new AddCustomerAddressRequest();
-        addressRequest.setAddressType(AddressType.RESIDENTIAL);
+        addressRequest.setAddressType(AddressType.PERMANENT);
         addressRequest.setAddressLine1("1 Royal Palace Way");
         addressRequest.setCity("Pella");
         addressRequest.setState("Central Macedonia");
@@ -102,7 +102,7 @@ class CustomerFullJourneyIntegrationTest {
 
         // Step 4: Configure Preferences
         CreateCustomerPreferenceRequest prefRequest = new CreateCustomerPreferenceRequest();
-        prefRequest.setPreferredLanguage(PreferredLanguage.EN);
+        prefRequest.setPreferredLanguage(PreferredLanguage.ENGLISH);
         prefRequest.setPreferredCommunicationChannel(CommunicationChannel.EMAIL);
         prefRequest.setMarketingNotifications(true);
         prefRequest.setTransactionNotifications(true);

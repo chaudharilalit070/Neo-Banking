@@ -1,5 +1,6 @@
 package com.neobank.neobank_backend.transaction;
 
+import com.neobank.neobank_backend.audit.domain.AuditEvent;
 import com.neobank.neobank_backend.audit.domain.AuditEventRepository;
 import com.neobank.neobank_backend.common.exception.BusinessException;
 import com.neobank.neobank_backend.customer.api.request.CreateCustomerRequest;
@@ -10,6 +11,7 @@ import com.neobank.neobank_backend.customer.domain.CustomerStatus;
 import com.neobank.neobank_backend.customer.domain.CustomerType;
 import com.neobank.neobank_backend.lifecycle.api.request.CustomerLifecycleActionRequest;
 import com.neobank.neobank_backend.lifecycle.application.CustomerLifecycleService;
+import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycle;
 import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycleAction;
 import com.neobank.neobank_backend.lifecycle.domain.CustomerLifecycleRepository;
 import com.neobank.neobank_backend.lifecycle.event.outbox.OutboxEventRepository;
@@ -20,6 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,9 +62,12 @@ class CustomerTransactionRollbackTest {
                 "USA"
         ));
 
-        int auditCountBefore = auditEventRepository.findAll().size();
+        LocalDateTime from = LocalDateTime.now().minusDays(1);
+        LocalDateTime to = LocalDateTime.now().plusDays(1);
+
+        List<AuditEvent> auditsBefore = auditEventRepository.findByCustomerId(customerResp.id(), from, to);
+        List<CustomerLifecycle> lifecyclesBefore = lifecycleRepository.findAllByCustomerId(customerResp.id());
         int outboxCountBefore = outboxEventRepository.findAll().size();
-        int lifecycleCountBefore = lifecycleRepository.findAll().size();
 
         // Attempt illegal transition (DEACTIVATE from PROSPECT)
         assertThrows(BusinessException.class, () ->
@@ -74,8 +81,12 @@ class CustomerTransactionRollbackTest {
         assertEquals(CustomerStatus.PROSPECT, customerRepository.findById(customerResp.id()).get().getCustomerStatus());
 
         // Verify no extra audit, outbox, or lifecycle records were committed
-        assertEquals(auditCountBefore, auditEventRepository.findAll().size());
-        assertEquals(outboxCountBefore, outboxEventRepository.findAll().size());
-        assertEquals(lifecycleCountBefore, lifecycleRepository.findAll().size());
+        List<AuditEvent> auditsAfter = auditEventRepository.findByCustomerId(customerResp.id(), from, to);
+        List<CustomerLifecycle> lifecyclesAfter = lifecycleRepository.findAllByCustomerId(customerResp.id());
+        int outboxCountAfter = outboxEventRepository.findAll().size();
+
+        assertEquals(auditsBefore.size(), auditsAfter.size());
+        assertEquals(lifecyclesBefore.size(), lifecyclesAfter.size());
+        assertEquals(outboxCountBefore, outboxCountAfter);
     }
 }

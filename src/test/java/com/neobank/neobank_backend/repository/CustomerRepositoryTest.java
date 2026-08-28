@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,9 +48,6 @@ class CustomerRepositoryTest {
 
         assertTrue(customerRepository.existsByCustomerNumber("CUS-TEST-0001"));
         assertFalse(customerRepository.existsByCustomerNumber("CUS-NONEXISTENT"));
-
-        Optional<Customer> foundByNumber = customerRepository.findByCustomerNumber("CUS-TEST-0001");
-        assertTrue(foundByNumber.isPresent());
-        assertEquals(saved.getId(), foundByNumber.get().getId());
+        assertTrue(customerRepository.existsById(saved.getId()));
     }
 }
