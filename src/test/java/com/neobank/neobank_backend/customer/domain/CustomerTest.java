@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerTest {
 
     @Test
-    @DisplayName("Should create customer with initial PROSPECT status and version 0")
+    @DisplayName("Should create customer with initial PROSPECT status and null version prior to persist")
     void testCreateCustomer() {
         Customer customer = Customer.create(
                 "CUS-1234567890ABCDEF",
@@ -34,7 +34,7 @@ class CustomerTest {
         assertEquals("USA", customer.getNationality());
         assertEquals("admin-user", customer.getCreatedBy());
         assertNotNull(customer.getCreatedAt());
-        assertEquals(0L, customer.getVersion());
+        assertNull(customer.getVersion());
     }
 
     @Test

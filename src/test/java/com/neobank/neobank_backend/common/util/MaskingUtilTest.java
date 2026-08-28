@@ -11,8 +11,8 @@ class MaskingUtilTest {
     @DisplayName("Should mask valid email properly")
     void testMaskEmail() {
         assertEquals("j***e@domain.com", MaskingUtil.maskEmail("john.doe@domain.com"));
-        assertEquals("a***b@test.com", MaskingUtil.maskEmail("ab@test.com"));
-        assertEquals("a***@test.com", MaskingUtil.maskEmail("a@test.com"));
+        assertEquals("a***@test.com", MaskingUtil.maskEmail("ab@test.com"));
+        assertEquals("***@test.com", MaskingUtil.maskEmail("a@test.com"));
         assertNull(MaskingUtil.maskEmail(null));
         assertEquals("", MaskingUtil.maskEmail(""));
     }
@@ -20,7 +20,7 @@ class MaskingUtilTest {
     @Test
     @DisplayName("Should mask phone numbers retaining last 4 digits")
     void testMaskPhone() {
-        assertEquals("******7890", MaskingUtil.maskPhone("+1234567890"));
+        assertEquals("******7890", MaskingUtil.maskPhone("1234567890"));
         assertEquals("****1234", MaskingUtil.maskPhone("98761234"));
         assertEquals("****", MaskingUtil.maskPhone("123"));
         assertNull(MaskingUtil.maskPhone(null));

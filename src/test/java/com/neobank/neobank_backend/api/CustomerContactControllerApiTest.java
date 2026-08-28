@@ -1,6 +1,7 @@
 package com.neobank.neobank_backend.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
 import com.neobank.neobank_backend.contact.api.request.contact.AddCustomerContactRequest;
 import com.neobank.neobank_backend.contact.domain.contact.ContactType;
 import com.neobank.neobank_backend.customer.api.request.CreateCustomerRequest;
@@ -118,6 +119,6 @@ class CustomerContactControllerApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.errorCode").value("CONTACT_ALREADY_EXISTS"));
+                .andExpect(jsonPath("$.errorCode").value(ErrorCodes.CONTACT_ALREADY_EXISTS));
     }
 }

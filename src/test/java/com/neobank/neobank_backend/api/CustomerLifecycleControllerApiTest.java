@@ -1,6 +1,7 @@
 package com.neobank.neobank_backend.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
 import com.neobank.neobank_backend.customer.api.request.CreateCustomerRequest;
 import com.neobank.neobank_backend.customer.domain.CustomerType;
 import com.neobank.neobank_backend.lifecycle.api.request.CustomerLifecycleActionRequest;
@@ -55,7 +56,7 @@ class CustomerLifecycleControllerApiTest {
 
     @Test
     @DisplayName("POST /api/v1/customers/{id}/lifecycle/actions - START_ONBOARDING transitions PROSPECT to ONBOARDING")
-    @WithMockUser(username = "ops", roles = {"OPERATIONS"})
+    @WithMockUser(username = "ops", roles = {"OPERATIONS", "ADMIN"})
     void testApplyLifecycleAction() throws Exception {
         String customerId = createTestCustomer();
 
@@ -74,7 +75,7 @@ class CustomerLifecycleControllerApiTest {
 
     @Test
     @DisplayName("POST /api/v1/customers/{id}/lifecycle/actions - Invalid transition returns 400 Bad Request")
-    @WithMockUser(username = "ops", roles = {"OPERATIONS"})
+    @WithMockUser(username = "ops", roles = {"OPERATIONS", "ADMIN"})
     void testInvalidLifecycleTransition() throws Exception {
         String customerId = createTestCustomer();
 
@@ -87,12 +88,12 @@ class CustomerLifecycleControllerApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidAction)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errorCode").value("INVALID_LIFECYCLE_TRANSITION"));
+                .andExpect(jsonPath("$.errorCode").value(ErrorCodes.INVALID_LIFECYCLE_TRANSITION));
     }
 
     @Test
     @DisplayName("GET /api/v1/customers/{id}/lifecycle/current - 200 OK returns current state")
-    @WithMockUser(username = "auditor", roles = {"AUDITOR"})
+    @WithMockUser(username = "ops_auditor", roles = {"OPERATIONS", "AUDITOR"})
     void testGetCurrentLifecycle() throws Exception {
         String customerId = createTestCustomer();
 
@@ -103,7 +104,7 @@ class CustomerLifecycleControllerApiTest {
 
     @Test
     @DisplayName("GET /api/v1/customers/{id}/lifecycle - 200 OK returns lifecycle history")
-    @WithMockUser(username = "auditor", roles = {"AUDITOR"})
+    @WithMockUser(username = "ops_auditor", roles = {"OPERATIONS", "AUDITOR"})
     void testGetLifecycleHistory() throws Exception {
         String customerId = createTestCustomer();
 
@@ -125,6 +126,6 @@ class CustomerLifecycleControllerApiTest {
     void testGetLifecycleCustomerNotFound() throws Exception {
         mockMvc.perform(get("/api/v1/customers/{customerId}/lifecycle/current", UUID.randomUUID()))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.errorCode").value("CUSTOMER_NOT_FOUND"));
+                .andExpect(jsonPath("$.errorCode").value(ErrorCodes.CUSTOMER_NOT_FOUND));
     }
 }

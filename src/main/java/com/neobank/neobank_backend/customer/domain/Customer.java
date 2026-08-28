@@ -94,7 +94,7 @@ public class Customer {
         customer.nationality = nationality;
         customer.createdBy = createdBy;
         customer.createdAt = Instant.now();
-        customer.version = 0L;
+        customer.version = null;
         return customer;
     }
 
@@ -128,9 +128,6 @@ public class Customer {
         }
         if (createdAt == null) {
             createdAt = Instant.now();
-        }
-        if (version == null) {
-            version = 0L;
         }
     }
 

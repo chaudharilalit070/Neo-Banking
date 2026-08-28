@@ -1,6 +1,7 @@
 package com.neobank.neobank_backend.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
 import com.neobank.neobank_backend.customer.api.request.CreateCustomerRequest;
 import com.neobank.neobank_backend.customer.domain.CustomerType;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +41,7 @@ class SecurityAuthorizationTest {
         mockMvc.perform(get("/api/v1/customers/" + UUID.randomUUID()))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.status").value(401))
-                .andExpect(jsonPath("$.errorCode").value("UNAUTHORIZED"))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCodes.UNAUTHORIZED))
                 .andExpect(jsonPath("$.message").value("Authentication required"));
     }
 
@@ -62,7 +63,7 @@ class SecurityAuthorizationTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.status").value(403))
-                .andExpect(jsonPath("$.errorCode").value("FORBIDDEN"))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCodes.FORBIDDEN))
                 .andExpect(jsonPath("$.message").value("Access denied"));
     }
 

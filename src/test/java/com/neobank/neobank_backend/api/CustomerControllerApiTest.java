@@ -1,6 +1,7 @@
 package com.neobank.neobank_backend.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.neobank.neobank_backend.common.constants.ErrorCodes;
 import com.neobank.neobank_backend.customer.api.request.CreateCustomerRequest;
 import com.neobank.neobank_backend.customer.api.request.UpdateCustomerRequest;
 import com.neobank.neobank_backend.customer.domain.CustomerType;
@@ -73,7 +74,7 @@ class CustomerControllerApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errorCode").value("VALIDATION_ERROR"));
+                .andExpect(jsonPath("$.errorCode").value(ErrorCodes.VALIDATION_ERROR));
     }
 
     @Test
@@ -111,7 +112,7 @@ class CustomerControllerApiTest {
         UUID randomId = UUID.randomUUID();
         mockMvc.perform(get("/api/v1/customers/{customerId}", randomId))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.errorCode").value("CUSTOMER_NOT_FOUND"));
+                .andExpect(jsonPath("$.errorCode").value(ErrorCodes.CUSTOMER_NOT_FOUND));
     }
 
     @Test

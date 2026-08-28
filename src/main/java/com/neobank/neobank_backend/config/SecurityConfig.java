@@ -99,4 +99,21 @@ public class SecurityConfig {
             response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
         };
     }
+
+    @Bean
+    public org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
+        org.springframework.security.core.userdetails.UserDetails admin = org.springframework.security.core.userdetails.User.withUsername("admin")
+                .password("{noop}Admin@123")
+                .roles("ADMIN", "OPERATIONS", "AUDITOR")
+                .build();
+        org.springframework.security.core.userdetails.UserDetails ops = org.springframework.security.core.userdetails.User.withUsername("ops")
+                .password("{noop}Ops@123")
+                .roles("OPERATIONS")
+                .build();
+        org.springframework.security.core.userdetails.UserDetails auditor = org.springframework.security.core.userdetails.User.withUsername("auditor")
+                .password("{noop}Auditor@123")
+                .roles("AUDITOR")
+                .build();
+        return new org.springframework.security.provisioning.InMemoryUserDetailsManager(admin, ops, auditor);
+    }
 }

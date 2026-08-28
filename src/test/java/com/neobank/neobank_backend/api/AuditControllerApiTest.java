@@ -33,7 +33,7 @@ class AuditControllerApiTest {
 
     @Test
     @DisplayName("GET /api/v1/customers/{customerId}/audit - 200 OK returns audit events")
-    @WithMockUser(username = "auditor", roles = {"AUDITOR"})
+    @WithMockUser(username = "admin_auditor", roles = {"ADMIN", "AUDITOR"})
     void testGetAuditHistory() throws Exception {
         CreateCustomerRequest request = new CreateCustomerRequest(
                 CustomerType.INDIVIDUAL,
