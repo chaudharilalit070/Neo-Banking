@@ -1,7 +1,8 @@
 # Customer Microservice — API Testing Manual & Reference
 
 For the comprehensive, ready-to-test manual with complete dummy payloads, full URLs, HTTP methods, credentials, and cURL commands, see the root file:
-- [`API_TESTING_MANUAL.md`](file:///d:/neobank-backend/API_TESTING_MANUAL.md)
+- [`API_SPECIFICATION_DOCUMENT.md`](file:///d:/neobank-backend/API_SPECIFICATION_DOCUMENT.md) — Comprehensive Module-Wise API Specification & Field Dictionary (All fields, types, tables, validations, enums)
+- [`API_TESTING_MANUAL.md`](file:///d:/neobank-backend/API_TESTING_MANUAL.md) — Step-by-Step API Manual with cURL & full payloads
 
 ---
 
